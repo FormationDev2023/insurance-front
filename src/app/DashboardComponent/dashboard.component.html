@@ -1,0 +1,23 @@
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <div>
+        <h2>IARD 360°</h2>
+        <p>VISION CLIENT</p>
+      </div>
+    </div>
+    <nav class="menu">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/clients" routerLinkActive="active">Clients</a>
+      <a routerLink="/contracts" routerLinkActive="active">Contrats</a>
+      <a routerLink="/sinistres" routerLinkActive="active">Sinistres</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENU : s'affiche ici selon la route -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
