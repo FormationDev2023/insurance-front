@@ -1,0 +1,135 @@
+<!-- Overlay -->
+<div class="modal-overlay" (click)="onFermer()">
+
+  <!-- Modal -->
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">Nouveau client</h2>
+      <button class="btn-close" (click)="onFermer()" aria-label="Fermer">
+        <span>&times;</span>
+      </button>
+    </div>
+
+    <!-- Erreur globale -->
+    <div class="alert-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- Ligne 1 : Prénom + Nom -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prénom <span class="required">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="f['prenom'].invalid && f['prenom'].touched"
+            formControlName="prenom"
+            placeholder=""
+          />
+          <div class="invalid-feedback" *ngIf="f['prenom'].invalid && f['prenom'].touched">
+            <span *ngIf="f['prenom'].errors?.['required']">Le prénom est obligatoire.</span>
+            <span *ngIf="f['prenom'].errors?.['minlength']">Minimum 2 caractères.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nom <span class="required">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="f['nom'].invalid && f['nom'].touched"
+            formControlName="nom"
+            placeholder=""
+          />
+          <div class="invalid-feedback" *ngIf="f['nom'].invalid && f['nom'].touched">
+            <span *ngIf="f['nom'].errors?.['required']">Le nom est obligatoire.</span>
+            <span *ngIf="f['nom'].errors?.['minlength']">Minimum 2 caractères.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ligne 2 : Email -->
+      <div class="form-group full-width">
+        <label class="form-label">Email <span class="required">*</span></label>
+        <input
+          type="email"
+          class="form-control"
+          [class.is-invalid]="f['email'].invalid && f['email'].touched"
+          formControlName="email"
+          placeholder=""
+        />
+        <div class="invalid-feedback" *ngIf="f['email'].invalid && f['email'].touched">
+          <span *ngIf="f['email'].errors?.['required']">L'email est obligatoire.</span>
+          <span *ngIf="f['email'].errors?.['email']">Format email invalide.</span>
+        </div>
+      </div>
+
+      <!-- Ligne 3 : Téléphone + Date de naissance -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="telephone"
+            placeholder=""
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date de naissance</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="dateNaissance"
+          />
+        </div>
+      </div>
+
+      <!-- Ligne 4 : Adresse -->
+      <div class="form-group full-width">
+        <label class="form-label">Adresse</label>
+        <textarea
+          class="form-control textarea"
+          formControlName="adresse"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Ligne 5 : Segment + Statut -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" style="color: #7c3aed;">Segment</label>
+          <select class="form-control form-select" formControlName="segment">
+            <option *ngFor="let option of segmentOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color: #7c3aed;">Statut</label>
+          <select class="form-control form-select" formControlName="statut">
+            <option *ngFor="let option of statutOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Footer : boutons -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-annuler" (click)="onFermer()">
+          Annuler
+        </button>
+        <button type="submit" class="btn btn-creer" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner"></span>
+          <span>{{ isLoading ? 'Création...' : 'Créer' }}</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
