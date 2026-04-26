@@ -1,0 +1,60 @@
+<div class="list-container">
+  <div class="list-header">
+    <div class="filters">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Rechercher..." class="search-input" [(ngModel)]="searchTerm">
+      </div>
+      <select class="filter-select" [(ngModel)]="filterType">
+        <option value="">Tous types</option>
+        <option value="Auto">Auto</option>
+        <option value="Habitation">Habitation</option>
+        <option value="RC Pro">RC Pro</option>
+      </select>
+      <select class="filter-select" [(ngModel)]="filterStatut">
+        <option value="">Tous statuts</option>
+        <option value="Actif">Actif</option>
+        <option value="Résilié">Résilié</option>
+        <option value="Suspendu">Suspendu</option>
+      </select>
+    </div>
+    <button class="btn-nouveau" (click)="showForm = true">+ Nouveau contrat</button>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>N° Contrat</th>
+        <th>Client</th>
+        <th>Type</th>
+        <th>Effet</th>
+        <th>Échéance</th>
+        <th>Prime</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contrat of contratsFiltres" (click)="voirDetail(contrat)" class="table-row">
+        <td class="numero">{{ contrat.numeroContrat }}</td>
+        <td class="client-name">{{ contrat.nomClient }}</td>
+        <td><span class="badge badge-type">{{ contrat.type }}</span></td>
+        <td>{{ contrat.dateEffet | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contrat.dateEcheance | date:'dd/MM/yyyy' }}</td>
+        <td>{{ contrat.primeAnnuelle }} €</td>
+        <td><span [ngClass]="statutClass(contrat.statut)">{{ contrat.statut }}</span></td>
+      </tr>
+      <tr *ngIf="contratsFiltres.length === 0">
+        <td colspan="7" class="empty">Aucun contrat trouvé.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-contrat-form-component
+  *ngIf="showForm"
+  (fermer)="showForm = false"
+    (contratCree)="onContratCree($event)">
+
+ >
+</app-contrat-form-component>
+

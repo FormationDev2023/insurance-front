@@ -1,0 +1,62 @@
+<div class="list-container">
+  <div class="list-header">
+    <div class="filters">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Rechercher..." class="search-input" [(ngModel)]="searchTerm">
+      </div>
+      <select class="filter-select" [(ngModel)]="filterStatut">
+        <option value="">Tous statuts</option>
+        <option value="En cours">En cours</option>
+        <option value="Clôturé">Clôturé</option>
+        <option value="Refusé">Refusé</option>
+        <option value="Déclaré">Déclaré</option>
+      </select>
+      <select class="filter-select" [(ngModel)]="filterType">
+        <option value="">Tous types</option>
+        <option value="Dégât des eaux">Dégât des eaux</option>
+        <option value="Responsabilité">Responsabilité</option>
+        <option value="Bris de glace">Bris de glace</option>
+        <option value="Incendie">Incendie</option>
+      </select>
+    </div>
+    <button class="btn-nouveau" (click)="showForm = true">+ Déclarer un sinistre</button>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>N° Sinistre</th>
+        <th>Client</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Montant est.</th>
+        <th>Indemnisé</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sinistre of sinistresFiltres" class="table-row" (click)="voirDetail(sinistre)">
+        <td class="numero">{{ sinistre.numeroSinistre }}</td>
+        <td class="client-name">{{ sinistre.nomClient }}</td>
+        <td><span class="badge badge-type">{{ sinistre.type }}</span></td>
+        <td>{{ sinistre.dateSurvenance | date:'dd/MM/yyyy' }}</td>
+        <td>{{ sinistre.montantEstime | number }} €</td>
+        <td [class.montant-indemnise]="sinistre.montantIndemnise">
+          {{ sinistre.montantIndemnise ? (sinistre.montantIndemnise | number) + ' €' : '-' }}
+        </td>
+        <td><span [ngClass]="statutClass(sinistre.statut)">{{ sinistre.statut }}</span></td>
+      </tr>
+      <tr *ngIf="sinistresFiltres.length === 0">
+        <td colspan="7" class="empty">Aucun sinistre trouvé.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-sinistre-form-component
+  *ngIf="showForm"
+  (fermer)="showForm = false"
+>
+</app-sinistre-form-component>
+

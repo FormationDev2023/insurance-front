@@ -1,0 +1,96 @@
+<div class="modal-overlay" (click)="onFermer()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Nouveau contrat</h2>
+      <button class="btn-close" (click)="onFermer()">&times;</button>
+    </div>
+
+    <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <form [formGroup]="contratForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- Client -->
+      <div class="form-group full-width">
+        <label class="form-label">Client <span class="required">*</span></label>
+        <select class="form-control form-select"
+          [class.is-invalid]="f['clientId'].invalid && f['clientId'].touched"
+          formControlName="clientId">
+          <option value="">Sélectionner un client</option>
+          <option value="1">Jean Dupont</option>
+          <option value="2">Pierre Durand</option>
+          <option value="3">Sophie Martin</option>
+          <option value="4">Marie Leroy</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="f['clientId'].invalid && f['clientId'].touched">
+          Le client est obligatoire.
+        </div>
+      </div>
+
+      <!-- Type + Niveau de garantie -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Type <span class="required">*</span></label>
+          <select class="form-control form-select" formControlName="type">
+            <option value="Auto">Auto</option>
+            <option value="Habitation">Habitation</option>
+            <option value="RC Pro">RC Pro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Niveau de garantie</label>
+          <select class="form-control form-select" formControlName="niveauGarantie">
+            <option value="Basic">Basic</option>
+            <option value="Standard">Standard</option>
+            <option value="Premium">Premium</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Date d'effet + Date d'échéance -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date d'effet <span class="required">*</span></label>
+          <input type="date" class="form-control"
+            [class.is-invalid]="f['dateEffet'].invalid && f['dateEffet'].touched"
+            formControlName="dateEffet"/>
+          <div class="invalid-feedback" *ngIf="f['dateEffet'].invalid && f['dateEffet'].touched">
+            La date d'effet est obligatoire.
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date d'échéance <span class="required">*</span></label>
+          <input type="date" class="form-control"
+            [class.is-invalid]="f['dateEcheance'].invalid && f['dateEcheance'].touched"
+            formControlName="dateEcheance"/>
+          <div class="invalid-feedback" *ngIf="f['dateEcheance'].invalid && f['dateEcheance'].touched">
+            La date d'échéance est obligatoire.
+          </div>
+        </div>
+      </div>
+
+      <!-- Prime + Franchise -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prime annuelle (€)</label>
+          <input type="number" class="form-control" formControlName="primeAnnuelle" min="0"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Franchise (€)</label>
+          <input type="number" class="form-control" formControlName="franchise" min="0"/>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-annuler" (click)="onFermer()">Annuler</button>
+        <button type="submit" class="btn btn-creer" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner"></span>
+          {{ isLoading ? 'Création...' : 'Créer' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+

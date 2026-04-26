@@ -1,0 +1,99 @@
+<div class="modal-overlay" (click)="onFermer()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Déclarer un sinistre</h2>
+      <button class="btn-close" (click)="onFermer()">&times;</button>
+    </div>
+
+    <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <form [formGroup]="sinistreForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- Client -->
+      <div class="form-group full-width">
+        <label class="form-label">Client <span class="required">*</span></label>
+        <select class="form-control form-select"
+          [class.is-invalid]="f['clientId'].invalid && f['clientId'].touched"
+          formControlName="clientId"
+          (change)="onClientChange()">
+          <option value="">Sélectionner un client</option>
+          <option value="1">Jean Dupont</option>
+          <option value="2">Pierre Durand</option>
+          <option value="3">Sophie Martin</option>
+          <option value="4">Marie Leroy</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="f['clientId'].invalid && f['clientId'].touched">
+          Le client est obligatoire.
+        </div>
+      </div>
+
+      <!-- Contrat actif -->
+      <div class="form-group full-width">
+        <label class="form-label">Contrat actif <span class="required">*</span></label>
+        <select class="form-control form-select"
+          formControlName="contratId"
+          [disabled]="!f['clientId'].value">
+          <option value="">{{ f['clientId'].value ? 'Sélectionner un contrat' : 'Choisir un client d\'abord' }}</option>
+          <option *ngFor="let contrat of contratsClient" [value]="contrat.id">
+            {{ contrat.numero }} — {{ contrat.type }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Type + Montant estimé -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Type <span class="required">*</span></label>
+          <select class="form-control form-select"
+            [class.is-invalid]="f['type'].invalid && f['type'].touched"
+            formControlName="type">
+            <option value="Bris de glace">Bris de glace</option>
+            <option value="Dégât des eaux">Dégât des eaux</option>
+            <option value="Incendie">Incendie</option>
+            <option value="Responsabilité">Responsabilité</option>
+            <option value="Vol">Vol</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Montant estimé (€)</label>
+          <input type="number" class="form-control" formControlName="montantEstime" min="0"/>
+        </div>
+      </div>
+
+      <!-- Date de survenance + Date de déclaration -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date de survenance <span class="required">*</span></label>
+          <input type="date" class="form-control"
+            [class.is-invalid]="f['dateSurvenance'].invalid && f['dateSurvenance'].touched"
+            formControlName="dateSurvenance"/>
+          <div class="invalid-feedback" *ngIf="f['dateSurvenance'].invalid && f['dateSurvenance'].touched">
+            La date de survenance est obligatoire.
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date de déclaration <span class="required">*</span></label>
+          <input type="date" class="form-control" formControlName="dateDeclaration"/>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group full-width">
+        <label class="form-label">Description</label>
+        <textarea class="form-control textarea" formControlName="description" rows="4"></textarea>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-annuler" (click)="onFermer()">Annuler</button>
+        <button type="submit" class="btn btn-creer" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner"></span>
+          {{ isLoading ? 'Déclaration...' : 'Déclarer' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
