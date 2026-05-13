@@ -29,8 +29,8 @@
     <span [ngClass]="statusClass(client.statut)">{{ client.statut }}</span>
   </td>
   <td>
-    <span [ngClass]="scoreClass(client.scoreRisqueGlobal)">  >
-      {{ client.scoreRisqueGlobal  }}
+    <span [ngClass]="scoreClass(client.scoreRisqueGlobal ?? 0)">
+      {{ client.scoreRisqueGlobal ?? '-' }}
     </span>
   </td>
   <td>

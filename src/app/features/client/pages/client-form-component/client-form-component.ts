@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ClientService, Client } from '../../../../core';
 
 @Component({
   selector: 'app-client-form-component',
@@ -12,26 +12,29 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ClientFormComponent {
 
-  @Output() clientCree = new EventEmitter<any>();
+  @Output() clientCree = new EventEmitter<Client>();
   @Output() fermer = new EventEmitter<void>();
 
   clientForm: FormGroup;
   isLoading = false;
   errorMessage = '';
 
-  segmentOptions = ['Standard', 'Premium', 'VIP'];
-  statutOptions = ['Actif', 'Inactif', 'Suspendu'];
+  segmentOptions = ['STANDARD', 'PREMIUM', 'VIP'];
+  statutOptions = ['ACTIF', 'INACTIF', 'SUSPENDU'];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private clientService: ClientService
+  ) {
     this.clientForm = this.fb.group({
-      prenom:          ['', [Validators.required, Validators.minLength(2)]],
-      nom:             ['', [Validators.required, Validators.minLength(2)]],
-      email:           ['', [Validators.required, Validators.email]],
-      telephone:       [''],
-      dateNaissance:   [''],
-      adresse:         [''],
-      segment:         ['Standard'],
-      statut:          ['Actif']
+      prenom: ['', [Validators.required, Validators.minLength(2)]],
+      nom: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: [''],
+      dateNaissance: [''],
+      adresse: [''],
+      segment: ['STANDARD'],
+      statut: ['ACTIF']
     });
   }
 
@@ -48,9 +51,9 @@ export class ClientFormComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const payload = this.clientForm.value;
+    const payload = this.clientForm.value as Client;
 
-    this.http.post('http://localhost:8080/api/clients', payload).subscribe({
+    this.clientService.create(payload).subscribe({
       next: (response) => {
         this.isLoading = false;
         this.clientCree.emit(response);
@@ -58,15 +61,15 @@ export class ClientFormComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = err?.error?.message || 'Une erreur est survenue lors de la création du client.';
+        this.errorMessage = err?.message || 'Une erreur est survenue lors de la creation du client.';
       }
     });
   }
 
   onFermer(): void {
     this.clientForm.reset({
-      segment: 'Standard',
-      statut: 'Actif'
+      segment: 'STANDARD',
+      statut: 'ACTIF'
     });
     this.errorMessage = '';
     this.fermer.emit();

@@ -1,0 +1,66 @@
+.home {
+  max-width: 1200px;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+
+  .subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+}
+
+.health-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.health-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #94a3b8;
+  transition: all 0.2s;
+
+  &.up {
+    border-left-color: #22c55e;
+  }
+
+  &.down {
+    border-left-color: #ef4444;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.service-name {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.service-status {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.health-card.up .service-status {
+  color: #22c55e;
+}
+
+.health-card.down .service-status {
+  color: #ef4444;
+}
