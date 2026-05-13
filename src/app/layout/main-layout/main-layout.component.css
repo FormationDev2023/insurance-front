@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+
+  h1 {
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-height: 120px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}

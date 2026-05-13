@@ -1,0 +1,49 @@
+<div class="clients-container">
+  <div class="clients-header">
+    <input type="text" placeholder="Rechercher un client..." class="search-input">
+    <button class="btn-nouveau" (click)="showForm = true">+ Nouveau client</button>
+  </div>
+
+  <table class="clients-table">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Email</th>
+        <th>Segment</th>
+        <th>Statut</th>
+        <th>Score</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+  <tr *ngFor="let client of clients">
+  <td>
+    {{ client.nom }} {{ client.prenom }}<br>
+    <small>{{ client.numeroClient }}</small>  
+  </td>
+  <td>{{ client.email }}</td>
+  <td>
+    <span [ngClass]="segmentClass(client.segment)">{{ client.segment }}</span>
+  </td>
+  <td>
+    <span [ngClass]="statusClass(client.statut)">{{ client.statut }}</span>
+  </td>
+  <td>
+    <span [ngClass]="scoreClass(client.scoreRisqueGlobal ?? 0)">
+      {{ client.scoreRisqueGlobal ?? '-' }}
+    </span>
+  </td>
+  <td>
+    <button class="btn-view">👁️</button>
+  </td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 👇 Modal formulaire -->
+<app-client-form-component
+  *ngIf="showForm"
+  (fermer)="showForm = false"
+  (clientCree)="onClientCree($event)">
+</app-client-form-component>

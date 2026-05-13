@@ -1,0 +1,69 @@
+/* Container général */
+.clients-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Header avec recherche et bouton */
+.clients-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+.btn-nouveau {
+  background-color: #6366f1;
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #4f46e5;
+  }
+}
+
+/* Table clients */
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clients-table th, .clients-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+/* Badges segment */
+.badge-premium { background-color: #fde68a; padding: 2px 6px; border-radius: 4px; color: #b45309; }
+.badge-pro { background-color: #e0e7ff; padding: 2px 6px; border-radius: 4px; color: #3730a3; }
+.badge-standard { background-color: #f3f4f6; padding: 2px 6px; border-radius: 4px; color: #6b7280; }
+
+/* Badges statut */
+.status-actif { background-color: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; }
+.status-suspendu { background-color: #fde68a; padding: 2px 6px; border-radius: 4px; color: #b45309; }
+
+/* Score */
+.score-low { background-color: #d1fae5; color: #065f46; padding: 2px 6px; border-radius: 50%; display: inline-block; width: 30px; text-align: center; }
+.score-medium { background-color: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 50%; display: inline-block; width: 30px; text-align: center; }
+.score-high { background-color: #fee2e2; color: #b91c1c; padding: 2px 6px; border-radius: 50%; display: inline-block; width: 30px; text-align: center; }
+
+/* Bouton voir */
+.btn-view {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}

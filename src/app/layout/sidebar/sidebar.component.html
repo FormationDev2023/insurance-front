@@ -1,0 +1,16 @@
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">🛡️</div>
+    <div>
+      <h2>IARD 360°</h2>
+      <p>VISION CLIENT</p>
+    </div>
+  </div>
+  <nav class="menu">
+    @for (item of navItems; track item.route) {
+      <a [routerLink]="item.route" routerLinkActive="active">
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+</aside>
